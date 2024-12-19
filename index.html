@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senha Inicial</title>
+</head>
+<body>
+    <h1>Gerador de Senha Inicial do Aluno</h1>
+    <label for="nomeAluno">Digite o nome completo do aluno:</label>
+    <input type="text" id="nomeAluno" placeholder="Nome completo">
+    <button onclick="gerarSenha()">Gerar Senha</button>
+    <p id="resultado"></p>
+
+    <script>
+
+        function validarNome(nome) {
+            return nome.trim().split(" ").length > 1;
+        }
+
+        function obterSobrenome(nome) {
+            const partes = nome.trim().split(" ");
+            return partes[partes.length - 1].toLowerCase();
+        }
+
+        function contarVogais(nome) {
+            const vogais = "aeiouAEIOU";
+            let contador = 0;
+
+            for (let char of nome) {
+                if (vogais.includes(char)) {
+                    contador++;
+                }
+            }
+            return contador.toString().padStart(2, "0"); 
+        }
+
+        function gerarSenha() {
+            const nomeCompleto = document.getElementById("nomeAluno").value;
+            const resultado = document.getElementById("resultado");
+
+            if (!validarNome(nomeCompleto)) {
+                resultado.textContent = "Nome inválido! Por favor, insira o nome completo.";
+                return;
+            }
+
+            const sobrenome = obterSobrenome(nomeCompleto);
+            const numeroVogais = contarVogais(nomeCompleto);
+
+            const senha = sobrenome + numeroVogais;
+            resultado.textContent = "Senha inicial do aluno: " + senha;
+        }
+    </script>
+</body>
+</html>
